@@ -1,0 +1,12 @@
+---
+services:
+  app:
+    container_name: go-mashina
+    image: go-mashina
+    command: tail -f /dev/null
+    hostname: app
+    build: .
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/app
