@@ -1,32 +1,29 @@
 package wip
 
 import (
-	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/justaskz/mashina/config"
 )
 
-func Init() string {
-	initScript := loadInitScript()
-	aliases := loadAliases()
-	return strings.Join([]string{initScript, aliases}, "\n")
-}
+// func Init() string {
+// 	initScript := loadInitScript()
+// 	aliases := loadAliases()
+// 	return strings.Join([]string{initScript, aliases}, "\n")
+// }
 
-func loadInitScript() string {
-	initScript, err := fs.ReadFile(config.EmbedFiles, "init.sh")
-	if err != nil {
-		panic(err)
-	}
+// func loadInitScript() string {
+// 	initScript, err := fs.ReadFile(config.EmbedFiles, "init.sh")
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	return string(initScript)
-}
+// 	return string(initScript)
+// }
 
 func loadAliases() string {
 	var output []string
-	xdgConfigHome := getXDGConfigPath()
+	xdgConfigHome := getXDGConfigHomePath()
 	config := ReadUserConfig(xdgConfigHome + "/mashina/config.yaml")
 	for _, aliasFilePath := range config.Aliases {
 		script, err := os.ReadFile(aliasFilePath)
@@ -40,7 +37,13 @@ func loadAliases() string {
 	return strings.Join(output, "\n")
 }
 
-func getXDGConfigPath() string {
+func GetConfigPath() string {
+	xdgConfigHome := getXDGConfigHomePath()
+	configPath := xdgConfigHome + "/msh/config.yaml"
+	return configPath
+}
+
+func getXDGConfigHomePath() string {
 	xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")
 	if xdgConfigHome == "" {
 		home := os.Getenv("HOME")

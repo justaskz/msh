@@ -1,8 +1,8 @@
 ---
 services:
   app:
-    container_name: go-mashina
-    image: go-mashina
+    container_name: msh
+    image: msh
     command: tail -f /dev/null
     hostname: app
     build: .
