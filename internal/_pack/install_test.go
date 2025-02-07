@@ -1,4 +1,4 @@
-package pack
+package _pack
 
 // func TestInstall(t *testing.T) {
 // 	_, err := os.Stat("/tmp/mashina/helix-24.07-aarch64-macos.tar.xz")

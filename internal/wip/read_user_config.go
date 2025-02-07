@@ -6,12 +6,12 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type Pack struct {
-	Name    string
-	Version string
-}
+// type Pack struct {
+// 	Name    string
+// 	Version string
+// }
 
-type Packs []Pack
+// type Packs []Pack
 
 type Config struct {
 	Aliases []string `yaml:"aliases"`

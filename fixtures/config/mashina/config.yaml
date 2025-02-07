@@ -1,6 +1,8 @@
 ---
-aliases: []
-envs: []
-packs:
-  - name: helix
-    version: 24.07
+# aliases: []
+# envs: []
+# packs:
+#   - name: helix
+#     version: 24.07
+repos:
+  helix-editor/helix: 24.07
