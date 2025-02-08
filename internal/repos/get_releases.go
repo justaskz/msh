@@ -6,9 +6,10 @@ import (
 	"github.com/google/go-github/v69/github"
 )
 
-func GetReleases(repo Repo) ([]*github.RepositoryRelease, error) {
+func GetReleases(owner string, name string) ([]*github.RepositoryRelease, error) {
 	client := github.NewClient(nil)
-	releases, _, err := client.Repositories.ListReleases(context.Background(), repo.Owner, repo.Name, nil)
+	bg := context.Background()
+	releases, _, err := client.Repositories.ListReleases(bg, owner, name, nil)
 
 	if err != nil {
 		return nil, err

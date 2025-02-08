@@ -1,4 +1,4 @@
-package wip
+package dev
 
 import (
 	"testing"
@@ -8,9 +8,10 @@ import (
 
 func TestReadConfigFile(t *testing.T) {
 	Convey("", t, func() {
-		path := "../../fixtures/config/mashina/config.yaml"
-		packs, _ := ReadConfig(path)
+		path := "testdata/config.yaml"
+		repos, err := ReadConfig(path)
 
-		So(packs, ShouldEqual, Packs{})
+		So(err, ShouldBeNil)
+		So(len(repos), ShouldEqual, 2)
 	})
 }

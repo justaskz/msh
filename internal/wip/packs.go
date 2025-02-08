@@ -52,8 +52,3 @@ func (packs Packs) Add(pack Pack) Packs {
 
 	return packs
 }
-
-// type Repo struct {
-// 	Name    string
-// 	Version string
-// }

@@ -6,18 +6,65 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func TestParsePackageName(t *testing.T) {
+func TestCreateRepo(t *testing.T) {
+	Convey("when values are present", t, func() {
+		repo, err := CreateRepo("owner", "repo", "1.2.3")
+
+		So(err, ShouldBeNil)
+		So(repo.Owner, ShouldEqual, "owner")
+		So(repo.Name, ShouldEqual, "repo")
+		So(repo.Version, ShouldEqual, "1.2.3")
+
+		So(repo.Uid(), ShouldEqual, Uid("owner__repo__1.2.3"))
+	})
+
+	Convey("when values are not present", t, func() {
+		repo, err := CreateRepo("", "", "")
+
+		So(repo, ShouldEqual, Repo{})
+		So(err.Error(), ShouldEqual, "value is undefined")
+	})
+}
+
+func TestCreateRepos(t *testing.T) {
+	Convey("", t, func() {
+		repos := CreateRepos()
+
+		So(repos, ShouldEqual, Repos{})
+	})
+}
+
+func TestReposAdd(t *testing.T) {
+	Convey("", t, func() {
+		repo1, err1 := CreateRepo("owner", "repo", "1.2.3")
+		repo2, err2 := CreateRepo("owner", "repo2", "2.2.3")
+		repos := CreateRepos()
+		repos = repos.Add(repo1)
+		repos = repos.Add(repo2)
+
+		So(err1, ShouldBeNil)
+		So(err2, ShouldBeNil)
+		So(len(repos), ShouldEqual, 2)
+		So(repos, ShouldContainKey, repo1.Uid())
+		So(repos, ShouldContainKey, repo2.Uid())
+	})
+}
+
+func TestRepoNameParse(t *testing.T) {
 	Convey("with correctly formatted repo name", t, func() {
-		repoName := "owner/repo"
-		repo, err := ParseRepoName(repoName)
-		So(repo, ShouldEqual, Repo{Owner: "owner", Name: "repo"})
+		repoName := RepoName("owner/repo")
+		owner, name, err := repoName.Parse()
+
+		So(owner, ShouldEqual, "owner")
+		So(name, ShouldEqual, "repo")
 		So(err, ShouldBeNil)
 	})
 
 	Convey("with incorrectly formatted repo name", t, func() {
-		repoName := "owner/repo/version"
-		repo, err := ParseRepoName(repoName)
-		So(repo, ShouldEqual, Repo{})
+		repoName := RepoName("owner/repo/version")
+		owner, name, err := repoName.Parse()
 		So(err.Error(), ShouldEqual, "Repository name format is incorrect: 'owner/repo/version'")
+		So(owner, ShouldEqual, "")
+		So(name, ShouldEqual, "")
 	})
 }
