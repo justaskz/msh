@@ -8,34 +8,19 @@ import (
 var (
 	app = kingpin.New("msh", "Description msh")
 
+	status       = app.Command("status", "Description for status")
 	info         = app.Command("info", "Description for info")
 	infoRepoName = info.Arg("repo_name", "Repository name").Required().String()
-
-	// status = app.Command("status", "Description for status")
-	// debug = app.Command("debug", "Description for debug")
 )
 
 func Init(args []string) {
 	switch kingpin.MustParse(app.Parse(args)) {
 
-	// case status.FullCommand():
-	// 	Status()
+	case status.FullCommand():
+		commands.Status()
 
 	case info.FullCommand():
 		commands.Info(*infoRepoName)
-
-		// Info(infoPackage)
-		// releases, _ := commands.Info(*infoPackage)
-
-		// for _, release := range releases {
-		// 	fmt.Println(*release.Name)
-		// }
-
-		// case debug.FullCommand():
-		// 	fmt.Println("debug")
-		// 	// result := wip.ReadInstalled("fixtures/msh/opt")
-		// 	// result := wip.ReadInstalled("./*")
-		// 	// fmt.Println(result)
 	}
 }
 
