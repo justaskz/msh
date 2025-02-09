@@ -15,10 +15,8 @@ var (
 
 func Init(args []string) {
 	switch kingpin.MustParse(app.Parse(args)) {
-
 	case status.FullCommand():
 		commands.Status()
-
 	case info.FullCommand():
 		commands.Info(*infoRepoName)
 	}

@@ -7,6 +7,7 @@ require github.com/alecthomas/kingpin v2.2.6+incompatible
 require (
 	github.com/google/go-github/v69 v69.0.0
 	github.com/smartystreets/goconvey v1.8.1
+	golang.org/x/exp v0.0.0-20250207012021-f9890c6ad9f3
 	gopkg.in/yaml.v3 v3.0.1
 )
 
