@@ -14,6 +14,8 @@ func TestCreateRepo(t *testing.T) {
 		So(repo.Owner, ShouldEqual, "owner")
 		So(repo.Name, ShouldEqual, "repo")
 		So(repo.Version, ShouldEqual, "1.2.3")
+		So(repo.State, ShouldEqual, Missing)
+		So(repo.State.String(), ShouldEqual, "missing")
 
 		So(repo.Uid(), ShouldEqual, Uid("owner__repo__1.2.3"))
 	})
@@ -23,6 +25,15 @@ func TestCreateRepo(t *testing.T) {
 
 		So(repo, ShouldEqual, Repo{})
 		So(err.Error(), ShouldEqual, "value is undefined")
+	})
+}
+
+func TestRepoUpdateState(t *testing.T) {
+	Convey("", t, func() {
+		repo := BuildRepo("dummy")
+		So(repo.State, ShouldEqual, Missing)
+		repo = repo.UpdateState(Installed)
+		So(repo.State, ShouldEqual, Installed)
 	})
 }
 
@@ -37,7 +48,7 @@ func TestCreateRepos(t *testing.T) {
 func TestReposAdd(t *testing.T) {
 	Convey("", t, func() {
 		repo1, err1 := CreateRepo("owner", "repo", "1.2.3")
-		repo2, err2 := CreateRepo("owner", "repo2", "2.2.3")
+		repo2, err2 := CreateRepo("owner", "repo", "2.2.3")
 		repos := CreateRepos()
 		repos = repos.Add(repo1)
 		repos = repos.Add(repo2)
@@ -47,6 +58,16 @@ func TestReposAdd(t *testing.T) {
 		So(len(repos), ShouldEqual, 2)
 		So(repos, ShouldContainKey, repo1.Uid())
 		So(repos, ShouldContainKey, repo2.Uid())
+	})
+}
+
+func TestReposGet(t *testing.T) {
+	Convey("", t, func() {
+		repo := BuildRepo("dummy")
+		repos := CreateRepos().Add(repo)
+		result, err := repos.Get(repo.Uid())
+		So(result, ShouldEqual, repo)
+		So(err, ShouldBeNil)
 	})
 }
 
