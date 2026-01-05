@@ -5,6 +5,19 @@ import (
 	"path/filepath"
 )
 
+func GetMshPath() string {
+	home := os.Getenv("HOME")
+	return filepath.Join(home, ".local", "lib", "msh")
+}
+
+func GetBinPath() string {
+	return filepath.Join(GetMshPath(), "bin")
+}
+
+func GetLibPath() string {
+	return filepath.Join(GetMshPath(), "lib")
+}
+
 func GetConfigPath() string {
 	xdgConfigHome := getXDGConfigHomePath()
 	configPath := filepath.Join(xdgConfigHome, "msh", "config.yaml")

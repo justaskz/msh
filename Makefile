@@ -2,7 +2,7 @@ test:
 	@ go test ./...
 
 build_app:
-	@ go build -o bin/msh cmd/msh.go
+	@ go build -o bin/msh cmd/msh/main.go
 	@ chmod +x bin/msh
 
 # install:

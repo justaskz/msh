@@ -10,16 +10,7 @@ import (
 )
 
 func Status() {
-	configPath := dev.GetConfigPath()
-	repos, err := dev.ReadConfig(configPath)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	optPath := dev.GetOptPath()
-	installedRepos, err := dev.ReadInstalled(optPath)
-	repos, err = dev.FindInstalledRepos(repos, installedRepos)
+	repos, err := dev.GetReposWithState()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

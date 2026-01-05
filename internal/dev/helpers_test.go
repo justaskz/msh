@@ -19,3 +19,10 @@ func TestGetOptPath(t *testing.T) {
 		So(path, ShouldContainSubstring, ".msh/opt")
 	})
 }
+
+func TestGetLibPath(t *testing.T) {
+	Convey("", t, func() {
+		path := GetLibPath()
+		So(path, ShouldContainSubstring, ".local/lib/msh")
+	})
+}

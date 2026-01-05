@@ -1,12 +1,15 @@
 module github.com/justaskz/mashina
 
-go 1.22.4
+go 1.23.0
+
+toolchain go1.23.8
 
 require github.com/alecthomas/kingpin v2.2.6+incompatible
 
 require (
-	github.com/google/go-github/v69 v69.0.0
+	github.com/google/go-github/v70 v70.0.0
 	github.com/smartystreets/goconvey v1.8.1
+	github.com/ulikunitz/xz v0.5.12
 	golang.org/x/exp v0.0.0-20250207012021-f9890c6ad9f3
 	gopkg.in/yaml.v3 v3.0.1
 )

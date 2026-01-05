@@ -5,61 +5,6 @@ import (
 	"strings"
 )
 
-type Uid string
-type State int
-
-type Repo struct {
-	Owner   string
-	Name    string
-	Version string
-	State   State
-}
-
-const (
-	Missing State = iota
-	Installed
-)
-
-func CreateRepo(owner string, name string, version string) (Repo, error) {
-	values := []string{owner, name, version}
-	for _, value := range values {
-		if value == "" {
-			return Repo{}, fmt.Errorf("value is undefined")
-		}
-	}
-
-	repo := Repo{
-		Owner:   owner,
-		Name:    name,
-		Version: version,
-		State:   Missing,
-	}
-
-	return repo, nil
-}
-
-func (repo Repo) Uid() Uid {
-	elements := []string{repo.Owner, repo.Name, repo.Version}
-	uid := strings.Join(elements, "__")
-	return Uid(uid)
-}
-
-func (repo Repo) UpdateState(state State) Repo {
-	repo.State = state
-	return repo
-}
-
-func (state State) String() string {
-	switch state {
-	case 0:
-		return "missing"
-	case 1:
-		return "installed"
-	default:
-		return "missing"
-	}
-}
-
 type Repos map[Uid]Repo
 
 func CreateRepos() Repos {

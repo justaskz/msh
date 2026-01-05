@@ -6,37 +6,6 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func TestCreateRepo(t *testing.T) {
-	Convey("when values are present", t, func() {
-		repo, err := CreateRepo("owner", "repo", "1.2.3")
-
-		So(err, ShouldBeNil)
-		So(repo.Owner, ShouldEqual, "owner")
-		So(repo.Name, ShouldEqual, "repo")
-		So(repo.Version, ShouldEqual, "1.2.3")
-		So(repo.State, ShouldEqual, Missing)
-		So(repo.State.String(), ShouldEqual, "missing")
-
-		So(repo.Uid(), ShouldEqual, Uid("owner__repo__1.2.3"))
-	})
-
-	Convey("when values are not present", t, func() {
-		repo, err := CreateRepo("", "", "")
-
-		So(repo, ShouldEqual, Repo{})
-		So(err.Error(), ShouldEqual, "value is undefined")
-	})
-}
-
-func TestRepoUpdateState(t *testing.T) {
-	Convey("", t, func() {
-		repo := BuildRepo("dummy")
-		So(repo.State, ShouldEqual, Missing)
-		repo = repo.UpdateState(Installed)
-		So(repo.State, ShouldEqual, Installed)
-	})
-}
-
 func TestCreateRepos(t *testing.T) {
 	Convey("", t, func() {
 		repos := CreateRepos()
@@ -55,7 +24,7 @@ func TestReposAdd(t *testing.T) {
 
 		So(err1, ShouldBeNil)
 		So(err2, ShouldBeNil)
-		So(len(repos), ShouldEqual, 2)
+		So(repos, ShouldHaveLength, 2)
 		So(repos, ShouldContainKey, repo1.Uid())
 		So(repos, ShouldContainKey, repo2.Uid())
 	})

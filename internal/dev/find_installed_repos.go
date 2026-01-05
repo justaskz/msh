@@ -17,7 +17,8 @@ func FindInstalledRepos(configRepos r.Repos, installedRepos r.Repos) (r.Repos, e
 			return r.Repos{}, err
 		}
 
-		repo.UpdateState(repos.Installed)
+		repo = repo.UpdateState(repos.Installed)
+		configRepos.Add(repo)
 	}
 
 	return configRepos, nil
